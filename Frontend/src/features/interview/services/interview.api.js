@@ -1,12 +1,12 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}/api/auth`,
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
 });
 
 /**
- * @description Service to generate interview report based on user self description, resume and job description.
+ * Generate interview report
  */
 export const generateInterviewReport = async ({
   jobDescription,
@@ -14,11 +14,12 @@ export const generateInterviewReport = async ({
   resumeFile,
 }) => {
   const formData = new FormData();
+
   formData.append("jobDescription", jobDescription);
   formData.append("selfDescription", selfDescription);
   formData.append("resume", resumeFile);
 
-  const response = await api.post("/api/interview/", formData, {
+  const response = await api.post("/api/interview", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -28,7 +29,7 @@ export const generateInterviewReport = async ({
 };
 
 /**
- * @description Service to get interview report by interviewId.
+ * Get report by id
  */
 export const getInterviewReportById = async (interviewId) => {
   const response = await api.get(`/api/interview/report/${interviewId}`);
@@ -37,21 +38,21 @@ export const getInterviewReportById = async (interviewId) => {
 };
 
 /**
- * @description Service to get all interview reports of logged in user.
+ * Get all reports
  */
 export const getAllInterviewReports = async () => {
-  const response = await api.get("/api/interview/");
+  const response = await api.get("/api/interview");
 
   return response.data;
 };
 
 /**
- * @description Service to generate resume pdf based on user self description, resume content and job description.
+ * Download optimized resume PDF
  */
 export const generateResumePdf = async ({ interviewReportId }) => {
   const response = await api.post(
     `/api/interview/resume/pdf/${interviewReportId}`,
-    null,
+    {},
     {
       responseType: "blob",
     },
