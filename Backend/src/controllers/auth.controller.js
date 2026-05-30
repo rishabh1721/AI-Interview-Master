@@ -3,11 +3,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const tokenBlacklistModel = require("../models/blacklist.model");
 
-/**
- * @name registerUser
- * @desc Register a new user
- * @access Public
- */
+const cookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  maxAge: 24 * 60 * 60 * 1000,
+};
 
 async function registerUserController(req, res) {
   try {
@@ -31,13 +32,11 @@ async function registerUserController(req, res) {
 
     const hash = await bcrypt.hash(password, 10);
 
-    const newUser = new userModel({
+    const newUser = await userModel.create({
       username,
       email,
       password: hash,
     });
-
-    await newUser.save();
 
     const token = jwt.sign(
       {
@@ -50,9 +49,7 @@ async function registerUserController(req, res) {
       },
     );
 
-    res.cookie("token", token, {
-      httpOnly: true,
-    });
+    res.cookie("token", token, cookieOptions);
 
     res.status(201).json({
       message: "User registered successfully",
@@ -71,12 +68,6 @@ async function registerUserController(req, res) {
     });
   }
 }
-
-/**
- * @name loginUser
- * @desc Login a user
- * @access Public
- */
 
 async function loginUserController(req, res) {
   try {
@@ -115,9 +106,7 @@ async function loginUserController(req, res) {
       },
     );
 
-    res.cookie("token", token, {
-      httpOnly: true,
-    });
+    res.cookie("token", token, cookieOptions);
 
     res.status(200).json({
       message: "User logged in successfully",
@@ -137,12 +126,6 @@ async function loginUserController(req, res) {
   }
 }
 
-/**
- * @name logoutUser
- * @desc Logout a user
- * @access Private
- */
-
 async function logoutUserController(req, res) {
   try {
     const token = req.cookies.token;
@@ -151,7 +134,11 @@ async function logoutUserController(req, res) {
       await tokenBlacklistModel.create({ token });
     }
 
-    res.clearCookie("token");
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    });
 
     res.status(200).json({
       message: "User logged out successfully",
@@ -164,11 +151,7 @@ async function logoutUserController(req, res) {
     });
   }
 }
-/**
- * @name getMe
- * @desc Get the logged in user's details
- * @access Private
- */
+
 async function getMeController(req, res) {
   try {
     const user = await userModel.findById(req.user.id).select("-password");
