@@ -8,7 +8,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["http://localhost:5173", process.env.FRONTEND_URL],
+    origin: [
+      "http://localhost:5173",
+      "https://ai-interview-master-1.onrender.com",
+    ],
     credentials: true,
   }),
 );
