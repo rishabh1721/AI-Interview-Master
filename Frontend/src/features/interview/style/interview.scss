@@ -1,0 +1,484 @@
+/* =========================
+   VARIABLES (Inherited style)
+========================= */
+:root {
+  --bg: #000000;
+  --surface: #0a0a0a;
+  --surface-hover: #111111;
+  --border: #333333;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 6px;
+}
+
+.interview-page {
+  min-height: 100vh;
+  padding: 40px 24px 100px;
+  position: relative;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+.mt-6 {
+  margin-top: 24px;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+
+  .back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: #fff;
+      border-color: #fff !important;
+    }
+  }
+}
+
+/* =========================
+   GLASS PANELS (Base)
+========================= */
+.glass-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-header {
+  margin-bottom: 24px;
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+}
+
+/* =========================
+   TOP DASHBOARD
+========================= */
+.dashboard-top {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* Match Score Circle */
+.score-panel {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  h3 {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+
+  .score-circle {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin-bottom: 16px;
+
+    .circular-chart {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .circle-bg {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 1.5;
+    }
+
+    .circle {
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke: #fff;
+      animation: progress 1.5s ease-out forwards;
+    }
+
+    .score-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: baseline;
+
+      .number {
+        font-size: 3rem;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        color: #fff;
+      }
+      .percent {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        font-weight: 600;
+      }
+    }
+  }
+
+  p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+}
+
+@keyframes progress {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+}
+
+/* Skill Gaps List */
+.gaps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gap-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: #000;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  gap: 12px;
+
+  .gap-name {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.4;
+  }
+
+  .gap-severity {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid;
+
+    &.severity-high {
+      color: #fff;
+      border-color: #555;
+      background: #222;
+    }
+    &.severity-medium {
+      color: var(--text-secondary);
+      border-color: var(--border);
+    }
+    &.severity-low {
+      color: var(--text-muted);
+      border-color: transparent;
+      background: rgba(255, 255, 255, 0.02);
+    }
+  }
+}
+
+/* =========================
+   TIMELINE SECTION
+========================= */
+.timeline-panel {
+  margin-bottom: 24px;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 24px;
+  margin-top: 16px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 32px;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -28px;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #000;
+    border: 2px solid #fff;
+  }
+
+  .day-marker {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+
+  .day-content {
+    background: #000;
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: var(--radius-md);
+
+    h4 {
+      font-size: 1.0625rem;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    p {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+  }
+}
+
+/* =========================
+   QUESTIONS ACCORDION
+========================= */
+.questions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.question-card {
+  background: #000;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #444;
+  }
+
+  &.open {
+    border-color: #666;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 16px;
+
+    .q-number {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #fff;
+      background: #111;
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .q-text {
+      flex-grow: 1;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .toggle-icon {
+      color: var(--text-secondary);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+  }
+
+  .card-expanded {
+    /* 64px indents perfectly under the text on desktop, avoiding the Q1 badge */
+    padding: 0 20px 24px 64px;
+    border-top: 1px solid transparent;
+
+    .intention {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 16px;
+      line-height: 1.5;
+
+      strong {
+        color: #fff;
+      }
+    }
+
+    .answer {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+
+      strong {
+        display: block;
+        color: #fff;
+        margin-bottom: 8px;
+      }
+    }
+  }
+}
+
+/* =========================
+   BULLETPROOF RESPONSIVENESS
+========================= */
+
+/* TABLET */
+@media (max-width: 900px) {
+  .dashboard-top {
+    grid-template-columns: 1fr;
+  }
+  .score-panel {
+    padding: 32px;
+  }
+}
+
+/* LARGE MOBILE */
+@media (max-width: 768px) {
+  .interview-page {
+    padding: 24px 16px 80px;
+  }
+
+  /* Shrink base padding for all glass panels */
+  .glass-panel {
+    padding: 24px;
+  }
+
+  .page-nav {
+    margin-bottom: 24px;
+  }
+
+  /* Adjust timeline connecting line and dots to fit tight screens */
+  .timeline {
+    padding-left: 20px;
+  }
+
+  .timeline-item::before {
+    left: -24.5px;
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Redefine card layout so text doesn't get crushed */
+  .question-card {
+    .card-top {
+      padding: 16px;
+      gap: 12px;
+    }
+
+    .card-expanded {
+      /* Remove the 64px left indent entirely on mobile */
+      padding: 0 16px 20px 16px;
+    }
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+  .glass-panel {
+    padding: 20px 16px;
+  }
+
+  .panel-header h2 {
+    font-size: 1.125rem;
+  }
+
+  /* Shrink the score circle slightly */
+  .score-panel .score-circle {
+    width: 120px;
+    height: 120px;
+
+    .score-text .number {
+      font-size: 2.5rem;
+    }
+  }
+
+  /* Allow gap items to stack if the skill name is super long */
+  .gap-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .day-content {
+    padding: 16px;
+
+    h4 {
+      font-size: 1rem;
+    }
+  }
+
+  .question-card .card-top .q-text {
+    font-size: 0.9375rem;
+  }
+}
